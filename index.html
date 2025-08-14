@@ -1,0 +1,3459 @@
+<!DOCTYPE html>
+<!-- saved from url=(0019)https://wyr.fwh.is/ -->
+<html lang="en"><script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/content/location/location.js" id="eppiocemhmnlbhjplcgkofciiegomcon"></script><script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/libs/extend-native-history-api.js"></script><script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/libs/requests.js"></script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="https://ibb.co/4nhPDJzt">
+    <title>Adolf Gitler</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0f;
+            color: #ffffff;
+            overflow: hidden;
+        }
+
+        /* Loader Page with Advanced Effects */
+        #loader-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a0f2e 50%, #0f1419 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        #hurricane-logo {
+            width: 120px;
+            height: 120px;
+            background: url('https://ibb.co/4nhPDJzt') no-repeat center;
+            background-size: contain;
+            border-radius: 50%;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(255, 107, 107, 0.3);
+            animation: logoFloat 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { 
+                transform: translateY(0px) scale(1);
+                box-shadow: 0 20px 60px rgba(255, 107, 107, 0.3);
+            }
+            50% { 
+                transform: translateY(-15px) scale(1.05);
+                box-shadow: 0 30px 80px rgba(255, 107, 107, 0.4);
+            }
+        }
+
+        .loader-circle {
+            width: 60px;
+            height: 60px;
+            border: 3px solid transparent;
+            border-top: 3px solid #ff6b6b;
+            border-right: 3px solid #4ecdc4;
+            border-radius: 50%;
+            animation: spin 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            margin-bottom: 20px;
+        }
+
+        .loading-text {
+            font-size: 14px;
+            color: #8892b0;
+            animation: pulse 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Main Page */
+        #main-page {
+            display: none;
+            height: 100vh;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a0f2e 50%, #0f1419 100%);
+            position: relative;
+        }
+
+        .background-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(255, 107, 107, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(78, 205, 196, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(69, 183, 209, 0.1) 0%, transparent 50%);
+            z-index: 0;
+        }
+
+        .container {
+            display: flex;
+            height: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 320px;
+            padding: 30px 25px;
+            background: rgba(15, 15, 26, 0.9);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .sidebar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.05) 0%, rgba(78, 205, 196, 0.05) 100%);
+            border-radius: 0 20px 20px 0;
+        }
+
+        .profile {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            margin-bottom: 40px;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            background-image: url('https://cdn.discordapp.com/attachments/1316139271366639736/1379129141445656717/image.png?ex=683f1d9a&is=683dcc1a&hm=a1dbd649dc016a917fd317cf5d6e204256083f23bf082aea0ddf0a163e21dfa3');
+            background-size: cover;
+            background-position: center;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .avatar:hover {
+            transform: scale(1.08) translateY(-3px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+            border-color: rgba(255, 107, 107, 0.4);
+        }
+
+        .profile h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .profile-info span {
+            font-size: 13px;
+            color: #8892b0;
+            padding: 4px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .download-section {
+            width: 100%;
+            margin: 15px 0 25px 0;
+            text-align: center;
+            position: relative;
+            z-index: 999;
+            display: block !important;
+            visibility: visible !important;
+            background: rgba(78, 205, 196, 0.15);
+            padding: 15px;
+            border-radius: 15px;
+            border: 2px solid rgba(78, 205, 196, 0.5);
+        }
+
+        .download-btn {
+            width: 100% !important;
+            height: 50px !important;
+            padding: 15px 20px !important;
+            background: linear-gradient(135deg, #4ecdc4, #45b7d1) !important;
+            color: white !important;
+            border: 3px solid #4ecdc4 !important;
+            border-radius: 12px !important;
+            font-weight: 700 !important;
+            font-size: 15px !important;
+            cursor: pointer !important;
+            transition: all 0.3s ease !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 10px !important;
+            backdrop-filter: blur(10px) !important;
+            opacity: 1 !important;
+            box-shadow: 0 8px 20px rgba(78, 205, 196, 0.4) !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1px !important;
+        }
+
+        .download-btn:hover {
+            background: linear-gradient(135deg, #45b7d1, #3498db) !important;
+            transform: translateY(-3px) scale(1.05) !important;
+            box-shadow: 0 15px 30px rgba(78, 205, 196, 0.6) !important;
+        }
+
+        .download-icon {
+            font-size: 18px !important;
+            font-weight: bold !important;
+        }
+
+        .download-client-section {
+            width: 100%;
+            margin: 20px 0;
+            text-align: center;
+            position: relative;
+            z-index: 999;
+        }
+
+        .download-client-btn {
+            width: 100% !important;
+            height: 45px !important;
+            padding: 12px 18px !important;
+            background: linear-gradient(135deg, #ff6b6b, #e55656) !important;
+            color: white !important;
+            border: 2px solid #ff6b6b !important;
+            border-radius: 12px !important;
+            font-weight: 600 !important;
+            font-size: 14px !important;
+            cursor: pointer !important;
+            transition: all 0.3s ease !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 8px !important;
+            backdrop-filter: blur(10px) !important;
+            opacity: 1 !important;
+            box-shadow: 0 6px 18px rgba(255, 107, 107, 0.3) !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+        }
+
+        .download-client-btn:hover {
+            background: linear-gradient(135deg, #e55656, #d63447) !important;
+            transform: translateY(-2px) scale(1.03) !important;
+            box-shadow: 0 12px 25px rgba(255, 107, 107, 0.5) !important;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #4ecdc4;
+            border-radius: 50%;
+            margin-right: 6px;
+            animation: statusPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes statusPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Menu */
+        .menu {
+            position: relative;
+            z-index: 2;
+        }
+
+        .menu-item {
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            margin: 12px 0;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+        }
+
+        .menu-icon {
+            font-size: 16px;
+            color: #4ecdc4;
+            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .menu-item:hover {
+            background: rgba(255, 107, 107, 0.15);
+            border-color: rgba(255, 107, 107, 0.4);
+            transform: translateX(8px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.2);
+        }
+
+        .menu-item:hover .menu-icon {
+            transform: scale(1.2) rotate(5deg);
+            color: #ff6b6b;
+        }
+
+        .menu-item.active {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.2), rgba(78, 205, 196, 0.2));
+            border-color: rgba(255, 107, 107, 0.5);
+        }
+
+        .support {
+            margin-top: 40px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .support a {
+            color: #4ecdc4;
+            text-decoration: none;
+            padding: 12px 24px;
+            background: rgba(78, 205, 196, 0.1);
+            border-radius: 25px;
+            border: 1px solid rgba(78, 205, 196, 0.3);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-block;
+            font-weight: 500;
+        }
+
+        .support a:hover {
+            background: rgba(78, 205, 196, 0.25);
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(78, 205, 196, 0.3);
+            border-color: rgba(78, 205, 196, 0.5);
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 11px;
+            color: #64748b;
+            margin-top: 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Content Area */
+        .content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .content h1 {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff, #8892b0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stats-bar {
+            display: flex;
+            gap: 20px;
+        }
+
+        .stat-item {
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 18px;
+            font-weight: 600;
+            color: #4ecdc4;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #8892b0;
+            margin-top: 2px;
+        }
+
+        /* Subscription Cards */
+        .subscriptions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+        }
+
+        .subscription-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subscription-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .subscription-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(255, 107, 107, 0.4);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .subscription-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .game-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+            margin-right: 15px;
+            font-size: 12px;
+            text-align: center;
+            line-height: 1;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .cs2-icon {
+            background: linear-gradient(135deg, #ff6b6b, #e55656);
+        }
+
+        .nonagon-icon {
+            background: linear-gradient(135deg, #4ecdc4, #45b7d1);
+        }
+
+        .fatal-icon {
+            background: linear-gradient(135deg, #ff6b6b, #d63447);
+        }
+
+        .phantom-icon {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+        }
+
+        .legacy-icon {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+        }
+
+        .ultimate-icon {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+
+        .elite-icon {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+        }
+
+        .card-info h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .subscription-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .status-free {
+            color: #4ecdc4;
+        }
+
+        .status-inactive {
+            color: #8892b0;
+        }
+
+        .status-premium {
+            color: #ff6b6b;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 14px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff6b6b, #e55656);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #e55656, #d63447);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #8892b0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.18);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Scrollbar */
+        .content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .content::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+        }
+
+        .content::-webkit-scrollbar-thumb {
+            background: rgba(255, 107, 107, 0.5);
+            border-radius: 3px;
+        }
+
+        .content::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 107, 107, 0.7);
+        }
+
+        /* Features List */
+        .features-list {
+            margin-top: 15px;
+            display: none;
+        }
+
+        .subscription-card:hover .features-list {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 8px 0;
+            font-size: 13px;
+            color: #8892b0;
+        }
+
+        .feature-check {
+            width: 16px;
+            height: 16px;
+            background: #4ecdc4;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 10px;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ff6b6b;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        /* Page Content */
+        .page-content {
+            display: none;
+        }
+
+        .page-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(78, 205, 196, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 15px;
+        }
+
+        .stat-icon {
+            font-size: 24px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #4ecdc4, #45b7d1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .stat-details {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-row:last-child {
+            border-bottom: none;
+        }
+
+        .stat-highlight {
+            color: #4ecdc4;
+            font-weight: 600;
+        }
+
+        .activity-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-time {
+            color: #8892b0;
+            font-size: 12px;
+        }
+
+        .activity-text {
+            color: #ffffff;
+            font-size: 14px;
+        }
+
+        /* Store Page */
+        .store-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .store-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .store-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 107, 107, 0.4);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .store-card.featured {
+            border: 2px solid #ff6b6b;
+            background: rgba(255, 107, 107, 0.1);
+        }
+
+        .store-card.premium {
+            border: 2px solid #f39c12;
+            background: rgba(243, 156, 18, 0.1);
+        }
+
+        .store-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #ff6b6b;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .premium-badge {
+            background: #f39c12;
+        }
+
+        .store-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 15px;
+        }
+
+        .store-info h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .store-price {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .price-old {
+            color: #8892b0;
+            text-decoration: line-through;
+            font-size: 14px;
+        }
+
+        .price-new {
+            color: #4ecdc4;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .store-features {
+            margin-bottom: 20px;
+        }
+
+        .store-actions {
+            margin-top: auto;
+        }
+
+        .store-btn {
+            width: 100%;
+            padding: 12px 20px;
+            font-size: 14px;
+        }
+
+        /* Settings Page */
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .settings-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
+        }
+
+        .settings-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(78, 205, 196, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .settings-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 15px;
+        }
+
+        .settings-icon {
+            font-size: 24px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #ff6b6b, #e55656);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .settings-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .settings-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        .setting-label {
+            color: #ffffff;
+            font-size: 14px;
+        }
+
+        .toggle-switch {
+            width: 50px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background: #4ecdc4;
+        }
+
+        .toggle-slider {
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-switch.active .toggle-slider {
+            transform: translateX(26px);
+        }
+
+        .setting-select {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #ffffff;
+            padding: 8px 12px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .setting-select:focus {
+            outline: none;
+            border-color: #4ecdc4;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .setting-select option {
+            background: #1a1a2e;
+            color: #ffffff;
+        }
+
+        .setting-item .btn {
+            padding: 8px 16px;
+            font-size: 12px;
+            min-height: auto;
+        }
+
+        /* Charts */
+        .chart-container {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chart-container h4 {
+            color: #ffffff;
+            font-size: 14px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .chart {
+            position: relative;
+            height: 120px;
+        }
+
+        .chart-bars {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            height: 80px;
+            margin-bottom: 10px;
+            gap: 8px;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(0deg, #4ecdc4, #45b7d1);
+            border-radius: 4px 4px 0 0;
+            min-height: 8px;
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .chart-bar:hover {
+            background: linear-gradient(0deg, #ff6b6b, #e55656);
+            transform: scaleY(1.1);
+        }
+
+        .chart-bar:hover::after {
+            content: attr(data-value);
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            white-space: nowrap;
+        }
+
+        .chart-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: #8892b0;
+        }
+
+        /* Pie Chart */
+        .pie-chart {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: conic-gradient(
+                #4ecdc4 0% 65%,
+                #ff6b6b 65% 88%,
+                #8892b0 88% 100%
+            );
+            margin: 0 auto 15px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .pie-chart:hover {
+            transform: scale(1.05);
+        }
+
+        .pie-chart::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: #0a0a0f;
+            border-radius: 50%;
+        }
+
+        .pie-legend {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: #8892b0;
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+        }
+
+        .nonagon-color {
+            background: #4ecdc4;
+        }
+
+        .fatal-color {
+            background: #ff6b6b;
+        }
+
+        .others-color {
+            background: #8892b0;
+        }
+
+        /* Live updates animation */
+        .activity-item {
+            animation: slideInActivity 0.5s ease-out;
+        }
+
+        @keyframes slideInActivity {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Theme variations */
+        body.light-theme {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #1a1a1a;
+        }
+
+        body.light-theme #main-page {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        }
+
+        body.light-theme .background-pattern {
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(168, 237, 234, 0.5) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(254, 214, 227, 0.4) 0%, transparent 50%);
+        }
+
+        body.light-theme .sidebar {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(25px);
+            border-right: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        body.light-theme .sidebar::before {
+            background: linear-gradient(135deg, rgba(168, 237, 234, 0.2) 0%, rgba(254, 214, 227, 0.2) 100%);
+        }
+
+        body.light-theme .subscription-card,
+        body.light-theme .stat-card,
+        body.light-theme .store-card,
+        body.light-theme .settings-card {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            color: #1a1a1a;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        body.light-theme .subscription-card:hover,
+        body.light-theme .stat-card:hover,
+        body.light-theme .store-card:hover,
+        body.light-theme .settings-card:hover {
+            background: rgba(255, 255, 255, 0.55);
+            border-color: rgba(168, 237, 234, 0.7);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+            transform: translateY(-8px) scale(1.02);
+        }
+
+        body.light-theme .subscription-card::before,
+        body.light-theme .store-card::before {
+            background: linear-gradient(90deg, #a8edea, #fed6e3, #a8edea);
+        }
+
+        body.light-theme .menu-item {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: #1a1a1a;
+        }
+
+        body.light-theme .menu-item:hover {
+            background: rgba(255, 255, 255, 0.5);
+            border-color: rgba(168, 237, 234, 0.8);
+            color: #168cad;
+            transform: translateX(8px) scale(1.02);
+        }
+
+        body.light-theme .menu-item.active {
+            background: linear-gradient(135deg, rgba(168, 237, 234, 0.4), rgba(254, 214, 227, 0.4));
+            border-color: rgba(168, 237, 234, 0.8);
+            color: #1a1a1a;
+        }
+
+        body.light-theme .content h1 {
+            background: linear-gradient(135deg, #1a1a1a, #168cad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        body.light-theme .stat-item {
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        body.light-theme .stat-item:hover {
+            background: rgba(255, 255, 255, 0.5);
+            transform: translateY(-3px) scale(1.05);
+        }
+
+        body.light-theme .stat-value {
+            color: #168cad;
+        }
+
+        body.light-theme .stat-label {
+            color: #666666;
+        }
+
+        body.light-theme .profile-info span {
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(15px);
+            color: #1a1a1a;
+        }
+
+        body.light-theme .profile h2 {
+            background: linear-gradient(135deg, #1a1a1a, #168cad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        body.light-theme .download-client-btn {
+            background: linear-gradient(135deg, #168cad, #4ecdc4) !important;
+            border: 2px solid #168cad !important;
+            box-shadow: 0 8px 25px rgba(22, 140, 173, 0.3) !important;
+            color: white !important;
+        }
+
+        body.light-theme .download-client-btn:hover {
+            background: linear-gradient(135deg, #4ecdc4, #168cad) !important;
+            box-shadow: 0 15px 35px rgba(22, 140, 173, 0.5) !important;
+        }
+
+        body.light-theme .game-icon {
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-theme .chart-container {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        body.light-theme .chart-container h4 {
+            color: #1a1a1a;
+        }
+
+        body.light-theme .pie-chart::after {
+            background: linear-gradient(135deg, #a8edea, #fed6e3);
+        }
+
+        body.light-theme .activity-time {
+            color: #666666;
+        }
+
+        body.light-theme .activity-text {
+            color: #1a1a1a;
+        }
+
+        body.light-theme .stat-highlight {
+            color: #168cad;
+            font-weight: 700;
+        }
+
+        body.light-theme .legend-item {
+            color: #1a1a1a;
+        }
+
+        body.light-theme .setting-select {
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: #1a1a1a;
+        }
+
+        body.light-theme .setting-select:focus {
+            border-color: #168cad;
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        body.light-theme .setting-label {
+            color: #1a1a1a;
+        }
+
+        body.light-theme .toggle-switch {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(15px);
+        }
+
+        body.light-theme .toggle-switch.active {
+            background: #168cad;
+        }
+
+        body.light-theme .support a {
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: #168cad;
+        }
+
+        body.light-theme .support a:hover {
+            background: rgba(255, 255, 255, 0.5);
+            border-color: rgba(168, 237, 234, 0.7);
+        }
+
+        body.light-theme .mobile-header {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(25px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        body.light-theme .mobile-logo {
+            color: #1a1a1a;
+        }
+
+        body.light-theme .setting-select option {
+            background: #168cad;
+            color: #ffffff;
+        }
+
+        body.light-theme .btn-secondary {
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            color: #1a1a1a;
+        }
+
+        body.light-theme .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.6);
+            color: #168cad;
+        }
+
+        body.light-theme .btn-primary {
+            background: linear-gradient(135deg, #168cad, #4ecdc4);
+            border: none;
+            color: white;
+        }
+
+        body.light-theme .btn-primary:hover {
+            background: linear-gradient(135deg, #4ecdc4, #168cad);
+        }
+
+        body.light-theme .subscription-status {
+            color: #1a1a1a;
+        }
+
+        body.light-theme .status-free {
+            color: #168cad;
+        }
+
+        body.light-theme .status-inactive {
+            color: #666666;
+        }
+
+        body.light-theme .status-premium {
+            color: #168cad;
+        }
+
+        body.light-theme .card-info h3 {
+            color: #1a1a1a;
+        }
+
+        body.light-theme .settings-card h3,
+        body.light-theme .stat-card h3,
+        body.light-theme .store-card h3 {
+            color: #1a1a1a;
+        }
+
+        body.light-theme .stat-row span:first-child {
+            color: #1a1a1a;
+        }
+
+        body.light-theme .footer {
+            color: #666666;
+        }
+
+        /* Light theme chart colors */
+        body.light-theme .chart-bar {
+            background: linear-gradient(0deg, #168cad, #4ecdc4);
+        }
+
+        body.light-theme .chart-bar:hover {
+            background: linear-gradient(0deg, #4ecdc4, #a8edea);
+        }
+
+        body.light-theme .chart-labels {
+            color: #666666;
+        }
+
+        body.light-theme .pie-chart {
+            background: conic-gradient(
+                #168cad 0% 65%,
+                #4ecdc4 65% 88%,
+                #a8edea 88% 100%
+            );
+        }
+
+        body.light-theme .nonagon-color {
+            background: #168cad;
+        }
+
+        body.light-theme .fatal-color {
+            background: #4ecdc4;
+        }
+
+        body.light-theme .others-color {
+            background: #a8edea;
+        }
+
+        /* Light theme icon colors */
+        body.light-theme .stat-icon {
+            background: linear-gradient(135deg, #168cad, #4ecdc4);
+            color: white;
+        }
+
+        body.light-theme .settings-icon {
+            background: linear-gradient(135deg, #168cad, #4ecdc4);
+            color: white;
+        }
+
+        body.light-theme .stat-icon:hover,
+        body.light-theme .settings-icon:hover {
+            box-shadow: 0 12px 30px rgba(22, 140, 173, 0.3);
+        }
+
+        body.light-theme .store-price {
+            color: #1a1a1a;
+        }
+
+        body.light-theme .price-old {
+            color: #666666;
+        }
+
+        body.light-theme .price-new {
+            color: #168cad;
+        }
+
+        body.light-theme .feature-item {
+            color: #1a1a1a;
+        }
+
+        /* Disabled animations class */
+        body.no-animations * {
+            animation: none !important;
+            transition: none !important;
+        }
+
+        body.no-animations .page-content.active {
+            animation: none;
+        }
+
+        /* Light theme chart adjustments */
+        body.light-theme .chart-container {
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-theme .pie-chart::after {
+            background: #f5f7fa;
+        }
+
+        body.light-theme .activity-time {
+            color: #7f8c8d;
+        }
+
+        body.light-theme .stat-highlight {
+            color: #2980b9;
+        }
+
+        body.light-theme .legend-item {
+            color: #7f8c8d;
+        }
+
+        /* Mobile overlay */
+        .mobile-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 99;
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-overlay.active {
+                display: block;
+            }
+        }
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                padding: 20px 15px;
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 100;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                height: 100vh;
+                overflow-y: auto;
+            }
+            
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            
+            .content {
+                margin-top: 70px;
+                padding: 20px 15px;
+            }
+            
+            .mobile-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 15px 20px;
+                background: rgba(15, 15, 26, 0.95);
+                backdrop-filter: blur(20px);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 50;
+            }
+            
+            .mobile-menu-btn {
+                background: none;
+                border: none;
+                color: #ffffff;
+                font-size: 24px;
+                cursor: pointer;
+                padding: 8px;
+                border-radius: 8px;
+                transition: all 0.3s ease;
+            }
+            
+            .mobile-menu-btn:hover {
+                background: rgba(255, 107, 107, 0.1);
+            }
+            
+            .mobile-logo {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                font-size: 18px;
+                font-weight: 600;
+                color: #ffffff;
+            }
+            
+            .mobile-logo-icon {
+                width: 32px;
+                height: 32px;
+                background: url('https://i.ibb.co/3YL1JF1Z/Picsart-25-06-01-17-16-34-066.png') no-repeat center;
+                background-size: contain;
+                border-radius: 50%;
+            }
+            
+            .profile {
+                margin-bottom: 30px;
+            }
+            
+            .download-section {
+                margin: 20px 0;
+            }
+            
+            .download-client-section {
+                margin: 15px 0;
+            }
+            
+            .download-client-btn {
+                height: 42px !important;
+                font-size: 13px !important;
+            }
+            
+            .avatar {
+                width: 80px;
+                height: 80px;
+                margin-bottom: 15px;
+            }
+            
+            .profile h2 {
+                font-size: 20px;
+            }
+            
+            .content h1 {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+            
+            .content-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            
+            .stats-bar {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .stat-item {
+                flex: 1;
+                margin: 0 5px;
+            }
+            
+            .subscriptions-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .stats-grid,
+            .store-grid,
+            .settings-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .stat-card,
+            .store-card,
+            .settings-card {
+                padding: 20px;
+            }
+
+            .chart-container {
+                margin-top: 15px;
+                padding: 12px;
+            }
+
+            .chart {
+                height: 100px;
+            }
+
+            .chart-bars {
+                height: 70px;
+                gap: 6px;
+            }
+
+            .pie-chart {
+                width: 100px;
+                height: 100px;
+            }
+
+            .chart-container h4 {
+                font-size: 13px;
+            }
+
+            .legend-item {
+                font-size: 11px;
+            }
+            
+            .subscription-card {
+                padding: 20px;
+            }
+            
+            .card-header {
+                margin-bottom: 15px;
+            }
+            
+            .game-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 11px;
+            }
+            
+            .card-info h3 {
+                font-size: 16px;
+            }
+            
+            .card-actions {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .btn {
+                width: 100%;
+                padding: 12px;
+                font-size: 14px;
+            }
+            
+            .menu-item {
+                padding: 12px 15px;
+                margin: 8px 0;
+            }
+            
+            .support {
+                margin-top: 30px;
+            }
+            
+            .support a {
+                display: block;
+                text-align: center;
+                padding: 15px;
+            }
+            
+            /* Hide features list on mobile hover issues */
+            .features-list {
+                display: block !important;
+                margin-top: 15px;
+                animation: none;
+            }
+            
+            .subscription-card:hover .features-list {
+                animation: none;
+            }
+            
+            /* Disable some hover effects on mobile */
+            .subscription-card:hover {
+                transform: none;
+            }
+            
+            .menu-item:hover {
+                transform: none;
+            }
+            
+            .avatar:hover {
+                transform: none;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .content {
+                padding: 15px 10px;
+            }
+            
+            .subscription-card {
+                padding: 15px;
+            }
+            
+            .mobile-header {
+                padding: 12px 15px;
+            }
+            
+            .content h1 {
+                font-size: 20px;
+            }
+            
+            .stats-bar {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .stat-item {
+                margin: 0;
+            }
+        }
+        
+        /* Desktop only styles */
+        @media (min-width: 769px) {
+            .mobile-header {
+                display: none;
+            }
+        }
+    </style><script bis_use="true" type="text/javascript" charset="utf-8" data-bis-config="[&quot;facebook.com/&quot;,&quot;twitter.com/&quot;,&quot;youtube-nocookie.com/embed/&quot;,&quot;//vk.com/&quot;,&quot;//www.vk.com/&quot;,&quot;linkedin.com/&quot;,&quot;//www.linkedin.com/&quot;,&quot;//instagram.com/&quot;,&quot;//www.instagram.com/&quot;,&quot;//www.google.com/recaptcha/api2/&quot;,&quot;//hangouts.google.com/webchat/&quot;,&quot;//www.google.com/calendar/&quot;,&quot;//www.google.com/maps/embed&quot;,&quot;spotify.com/&quot;,&quot;soundcloud.com/&quot;,&quot;//player.vimeo.com/&quot;,&quot;//disqus.com/&quot;,&quot;//tgwidget.com/&quot;,&quot;//js.driftt.com/&quot;,&quot;friends2follow.com&quot;,&quot;/widget&quot;,&quot;login&quot;,&quot;//video.bigmir.net/&quot;,&quot;blogger.com&quot;,&quot;//smartlock.google.com/&quot;,&quot;//keep.google.com/&quot;,&quot;/web.tolstoycomments.com/&quot;,&quot;moz-extension://&quot;,&quot;chrome-extension://&quot;,&quot;/auth/&quot;,&quot;//analytics.google.com/&quot;,&quot;adclarity.com&quot;,&quot;paddle.com/checkout&quot;,&quot;hcaptcha.com&quot;,&quot;recaptcha.net&quot;,&quot;2captcha.com&quot;,&quot;accounts.google.com&quot;,&quot;www.google.com/shopping/customerreviews&quot;,&quot;buy.tinypass.com&quot;,&quot;gstatic.com&quot;,&quot;secureir.ebaystatic.com&quot;,&quot;docs.google.com&quot;,&quot;contacts.google.com&quot;,&quot;github.com&quot;,&quot;mail.google.com&quot;,&quot;chat.google.com&quot;,&quot;audio.xpleer.com&quot;,&quot;keepa.com&quot;,&quot;static.xx.fbcdn.net&quot;,&quot;sas.selleramp.com&quot;,&quot;1plus1.video&quot;,&quot;console.googletagservices.com&quot;,&quot;//lnkd.demdex.net/&quot;,&quot;//radar.cedexis.com/&quot;,&quot;//li.protechts.net/&quot;,&quot;challenges.cloudflare.com/&quot;,&quot;ogs.google.com&quot;]" src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/traffic.js"></script>
+<style>
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+            
+            /* Font smoothing and base styles */
+            * {
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+            
+            /* Desktop hover effects */
+            @media (min-width: 769px) {
+                .subscription-card:hover .card-info h3 {
+                    color: #ff6b6b;
+                    transform: translateX(3px);
+                }
+            }
+            
+            /* Additional smooth transitions for mobile */
+            .subscription-card .card-info h3 {
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            
+            .feature-item {
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            
+            .feature-item:hover {
+                transform: translateX(5px);
+                color: #ffffff;
+            }
+            
+            .stat-item {
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            
+            .stat-item:hover {
+                transform: translateY(-3px) scale(1.05);
+                background: rgba(255, 255, 255, 0.1);
+            }
+            
+            /* Mobile specific improvements */
+            @media (max-width: 768px) {
+                .subscription-card .card-info h3:hover {
+                    color: inherit;
+                    transform: none;
+                }
+                
+                .feature-item:hover {
+                    transform: none;
+                    color: inherit;
+                }
+                
+                .stat-item:hover {
+                    transform: none;
+                }
+                
+                /* Better touch targets */
+                .btn, .download-btn, .download-client-btn, .store-btn {
+                    min-height: 44px;
+                }
+
+                .setting-item .btn {
+                    min-height: 40px;
+                    padding: 10px 14px;
+                    font-size: 13px;
+                }
+                
+                .menu-item {
+                    min-height: 48px;
+                }
+                
+                .download-btn, .download-client-btn, .store-btn {
+                    padding: 12px 15px;
+                }
+                
+                /* Improved mobile spacing */
+                .profile-info span {
+                    font-size: 12px;
+                    padding: 6px 10px;
+                }
+                
+                .subscription-status {
+                    font-size: 13px;
+                }
+                
+                .feature-item {
+                    font-size: 12px;
+                    margin: 6px 0;
+                }
+            }
+        </style></head>
+<body __processed_790df30b-bc41-42b6-9b8f-9319e7992c23__="true" bis_register="W3sibWFzdGVyIjp0cnVlLCJleHRlbnNpb25JZCI6ImVwcGlvY2VtaG1ubGJoanBsY2drb2ZjaWllZ29tY29uIiwiYWRibG9ja2VyU3RhdHVzIjp7IkRJU1BMQVkiOiJlbmFibGVkIiwiRkFDRUJPT0siOiJlbmFibGVkIiwiVFdJVFRFUiI6ImVuYWJsZWQiLCJSRURESVQiOiJlbmFibGVkIiwiUElOVEVSRVNUIjoiZW5hYmxlZCIsIklOU1RBR1JBTSI6ImVuYWJsZWQiLCJMSU5LRURJTiI6ImVuYWJsZWQiLCJDT05GSUciOiJkaXNhYmxlZCJ9LCJ2ZXJzaW9uIjoiMi4wLjI0Iiwic2NvcmUiOjIwMDI0MH1d" class="dark-theme">
+    <div id="loader-page" bis_skin_checked="1" style="opacity: 0; transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1); display: none;">
+        <div id="hurricane-logo" bis_skin_checked="1"></div>
+        <div class="loader-circle" bis_skin_checked="1"></div>
+        <div class="loading-text" bis_skin_checked="1">Loading Meme By Ksie...</div>
+    </div>
+
+    <div id="main-page" bis_skin_checked="1" style="display: block; opacity: 1; transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);">
+        <div class="mobile-header" bis_skin_checked="1">
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+            <div class="mobile-logo" bis_skin_checked="1">
+                <div class="mobile-logo-icon" bis_skin_checked="1"></div>
+                Pidoras1488
+            </div>
+            <div style="width: 40px; height: 40px;" bis_skin_checked="1"></div>
+        </div>
+        
+        <div class="mobile-overlay" id="mobile-overlay" bis_skin_checked="1"></div>
+        
+        <div class="background-pattern" bis_skin_checked="1"></div>
+        <div class="container" bis_skin_checked="1">
+            <div class="sidebar" id="mobile-sidebar" bis_skin_checked="1">
+                <div class="profile" bis_skin_checked="1">
+                    <div class="avatar" bis_skin_checked="1"></div>
+                    <h2>Pidoras1488</h2>
+                    <div class="profile-info" bis_skin_checked="1">
+                <span>🆔 <span class="status-indicator"></span>UID: GAY</span>
+                <span>🏳️ Country: Adolf Gitler</span>
+                <span>💪 Гей</span>
+            </div>
+                    
+                    <div class="download-client-section" bis_skin_checked="1">
+                        <button class="download-client-btn" onclick="downloadClient()">
+                <span class="download-icon">⬇</span>
+                Download Loader
+            </button>
+                    </div>
+                </div>
+                <div class="menu" bis_skin_checked="1">
+                    <div class="menu-item active" data-page="subscriptions" bis_skin_checked="1"><span class="menu-icon">💋</span> Subscriptions<span class="notification-badge">3</span></div>
+                    <div class="menu-item" data-page="store" bis_skin_checked="1"><span class="menu-icon">💋</span> Store</div>
+                    <div class="menu-item" data-page="settings" bis_skin_checked="1"><span class="menu-icon">💋</span> Settings</div>
+                </div>
+                <div class="support" bis_skin_checked="1">
+                    <a href="https://www.youtube.com/watch?v=GBIIQ0kP15E" target="_blank">Посмотреть порно</a>
+                </div>
+                <div class="footer" bis_skin_checked="1">
+                    ©2025 pidoras All rights reserved.
+                </div>
+            </div>
+            <div class="content" bis_skin_checked="1">
+                <div class="page-content active" id="subscriptions-page" bis_skin_checked="1">
+                    <div class="content-header" bis_skin_checked="1">
+                        <h1>Subscriptions</h1>
+                        <div class="stats-bar" bis_skin_checked="1">
+                            <div class="stat-item" bis_skin_checked="1">
+                                <div class="stat-value" bis_skin_checked="1">1</div>
+                                <div class="stat-label" bis_skin_checked="1">Active</div>
+                            </div>
+                            <div class="stat-item" bis_skin_checked="1">
+                                <div class="stat-value" bis_skin_checked="1">1</div>
+                                <div class="stat-label" bis_skin_checked="1">Visitors</div>
+                            </div>
+                            <div class="stat-item" bis_skin_checked="1">
+                                <div class="stat-value" bis_skin_checked="1">1</div>
+                                <div class="stat-label" bis_skin_checked="1">Users</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="subscriptions-grid" bis_skin_checked="1">
+                        <div class="subscription-card" bis_skin_checked="1" style="transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1); transform: translateY(-12px) scale(1.03);">
+                            <div class="card-header" bis_skin_checked="1">
+                                <div class="game-icon nonagon-icon" bis_skin_checked="1">NG</div>
+                                <div class="card-info" bis_skin_checked="1">
+                                    <h3>Nonagon</h3>
+                                    <div class="subscription-status status-free" bis_skin_checked="1">
+                                        <span class="status-dot"></span>
+                                        Free Access • Lifetime
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="features-list" bis_skin_checked="1">
+                                <div class="feature-item" bis_skin_checked="1">
+                                    <span class="feature-check">✓</span>
+                                    CS:2
+                                </div>
+                                <div class="feature-item" bis_skin_checked="1">
+                                    <span class="feature-check">✓</span>
+                                    Rage
+                                </div>
+                                <div class="feature-item" bis_skin_checked="1">
+                                    <span class="feature-check">✓</span>
+                                    ДАЕТ В АНАЛ
+                                </div>
+                            </div>
+                            <div class="card-actions" bis_skin_checked="1">
+                                <button class="btn btn-primary" onclick="launchNonagon()">Download</button>
+                                <button class="btn btn-secondary">Settings</button>
+                            </div>
+                        </div>
+
+                        <div class="subscription-card" bis_skin_checked="1" style="transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); transform: translateY(0px) scale(1);">
+                            <div class="card-header" bis_skin_checked="1">
+                                <div class="game-icon fatal-icon" bis_skin_checked="1">FTK</div>
+                                <div class="card-info" bis_skin_checked="1">
+                                    <h3>ГейПорно</h3>
+                                    <div class="subscription-status status-inactive" bis_skin_checked="1">
+                                        <span class="status-dot"></span>
+                                        Бесплатно епта
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="features-list" bis_skin_checked="1">
+                                <div class="feature-item" bis_skin_checked="1">
+                                    <span class="feature-check">✓</span>
+                                    Бесплатное
+                                </div>
+                                <div class="feature-item" bis_skin_checked="1">
+                                    <span class="feature-check">✓</span>
+                                    Гейское
+                                </div>
+                                <div class="feature-item" bis_skin_checked="1">
+                                    <span class="feature-check">✓</span>
+                                    Только На ПорнХаб
+                                </div>
+                            </div>
+                            <div class="card-actions" bis_skin_checked="1">
+                                <button class="btn btn-primary" onclick="window.open(&#39;https://rt.pornhub.org/view_video.php?viewkey=67d40de668d84&#39;, &#39;_blank&#39;)">Смотреть Бесплатно</button>
+                                <button class="btn btn-secondary">Details</button>
+                            </div>
+                        </div>
+
+                        <div class="subscription-card" bis_skin_checked="1" style="transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); transform: translateY(0px) scale(1);">
+                            <div class="card-header" bis_skin_checked="1">
+                                <div class="game-icon phantom-icon" bis_skin_checked="1">GS</div>
+                                <div class="card-info" bis_skin_checked="1">
+                                    <h3>GameSense</h3>
+                                    <div class="subscription-status status-free" bis_skin_checked="1">
+                                        <span class="status-dot"></span>
+                                        Free Access • Lifetime
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="features-list" bis_skin_checked="1">
+                                <div class="feature-item" bis_skin_checked="1">
+                                    <span class="feature-check">✓</span>
+                                    CS:GO
+                                </div>
+                                <div class="feature-item" bis_skin_checked="1">
+                                    <span class="feature-check">✓</span>
+                                    Rage
+                                </div>
+                                <div class="feature-item" bis_skin_checked="1">
+                                    <span class="feature-check">✓</span>
+                                    Undetected
+                                </div>
+                            </div>
+                           <div class="card-actions" bis_skin_checked="1">
+                                <button class="btn btn-primary" onclick="launchNonagon()">Download</button>
+                                <button class="btn btn-secondary">Settings</button>
+                            </div>
+                        </div>
+
+                        <div class="subscription-card" bis_skin_checked="1">
+                            <div class="card-header" bis_skin_checked="1">
+                                <div class="game-icon legacy-icon" bis_skin_checked="1">PR</div>
+                                <div class="card-info" bis_skin_checked="1">
+                                    <h3>Primordial</h3>
+                                    <div class="subscription-status status-inactive" bis_skin_checked="1">
+                                        <span class="status-dot"></span>
+                                        No Subscription
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="features-list" bis_skin_checked="1">
+                                <div class="feature-item" bis_skin_checked="1">
+                                    <span class="feature-check">-</span>
+                                    CS:2
+                                </div>
+                                <div class="feature-item" bis_skin_checked="1">
+                                    <span class="feature-check">-</span>
+                                    Rage
+                                </div>
+                                <div class="feature-item" bis_skin_checked="1">
+                                    <span class="feature-check">-</span>
+                                    Undetected
+                                </div>
+                            </div>
+                            <div class="card-actions" bis_skin_checked="1">
+                                <button class="btn btn-secondary" disabled="">Coming Soon</button>
+                                <button class="btn btn-secondary">Details</button>
+                            </div>
+                        </div>
+
+                        <div class="subscription-card" bis_skin_checked="1">
+                            <div class="card-header" bis_skin_checked="1">
+                                <div class="game-icon ultimate-icon" bis_skin_checked="1">CK</div>
+                                <div class="card-info" bis_skin_checked="1">
+                                    <h3>CompKiller</h3>
+                                    <div class="subscription-status status-inactive" bis_skin_checked="1">
+                                        <span class="status-dot"></span>
+                                        No Subscription
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="features-list" bis_skin_checked="1">
+                                <div class="feature-item" bis_skin_checked="1">
+                                    <span class="feature-check">-</span>
+                                    CS:2
+                                </div>
+                                <div class="feature-item" bis_skin_checked="1">
+                                    <span class="feature-check">-</span>
+                                    Rage
+                                </div>
+                                <div class="feature-item" bis_skin_checked="1">
+                                    <span class="feature-check">-</span>
+                                    Undetected
+                                </div>
+                            </div>
+                            <div class="card-actions" bis_skin_checked="1">
+                                <button class="btn btn-secondary" disabled="">Coming Soon</button>
+                                <button class="btn btn-secondary">Details</button>
+                            </div>
+                        </div>
+
+                        <div class="subscription-card" bis_skin_checked="1">
+                            <div class="card-header" bis_skin_checked="1">
+                                <div class="game-icon elite-icon" bis_skin_checked="1">AW</div>
+                                <div class="card-info" bis_skin_checked="1">
+                                    <h3>AimWare</h3>
+                                    <div class="subscription-status status-inactive" bis_skin_checked="1">
+                                        <span class="status-dot"></span>
+                                        Free Access • Lifetime
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="features-list" bis_skin_checked="1">
+                                <div class="feature-item" bis_skin_checked="1">
+                                    <span class="feature-check">✓</span>
+                                    CS:2
+                                </div>
+                                <div class="feature-item" bis_skin_checked="1">
+                                    <span class="feature-check">✓</span>
+                                    Rage
+                                </div>
+                                <div class="feature-item" bis_skin_checked="1">
+                                    <span class="feature-check">✓</span>
+                                    Undetected
+                                </div>
+                            </div>
+                            <div class="card-actions" bis_skin_checked="1">
+                                <button class="btn btn-secondary" disabled="">On update ❌</button>
+                                <button class="btn btn-secondary">Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="page-content" id="statistics-page" bis_skin_checked="1">
+                    <div class="content-header" bis_skin_checked="1">
+                        <h1>Statistics</h1>
+                        <div class="stats-bar" bis_skin_checked="1">
+                            <div class="stat-item" bis_skin_checked="1">
+                                <div class="stat-value" id="online-users" bis_skin_checked="1">1&nbsp;200</div>
+                                <div class="stat-label" bis_skin_checked="1">Online</div>
+                            </div>
+                            <div class="stat-item" bis_skin_checked="1">
+                                <div class="stat-value" bis_skin_checked="1">?%</div>
+                                <div class="stat-label" bis_skin_checked="1">Uptime</div>
+                            </div>
+                            <div class="stat-item" bis_skin_checked="1">
+                                <div class="stat-value" id="total-users" bis_skin_checked="1">1</div>
+                                <div class="stat-label" bis_skin_checked="1">Total Users</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stats-grid" bis_skin_checked="1">
+                        <div class="stat-card" bis_skin_checked="1">
+                            <div class="stat-card-header" bis_skin_checked="1">
+                                <div class="stat-icon" bis_skin_checked="1">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <path d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                </div>
+                                <h3>User Statistics</h3>
+                            </div>
+                            <div class="stat-details" bis_skin_checked="1">
+                                <div class="stat-row" bis_skin_checked="1">
+                                    <span>Active Users (24h)</span>
+                                    <span class="stat-highlight" id="active-24h">0</span>
+                                </div>
+                                <div class="stat-row" bis_skin_checked="1">
+                                    <span>New Registrations</span>
+                                    <span class="stat-highlight" id="new-regs">0</span>
+                                </div>
+                                <div class="stat-row" bis_skin_checked="1">
+                                    <span>Premium Users</span>
+                                    <span class="stat-highlight">?</span>
+                                </div>
+                                <div class="stat-row" bis_skin_checked="1">
+                                    <span>Countries</span>
+                                    <span class="stat-highlight">?</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card" bis_skin_checked="1">
+                            <div class="stat-card-header" bis_skin_checked="1">
+                                <div class="stat-icon" bis_skin_checked="1">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M3 3V21L21 12L3 3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                </div>
+                                <h3>Server Performance</h3>
+                            </div>
+                            <div class="stat-details" bis_skin_checked="1">
+                                <div class="stat-row" bis_skin_checked="1">
+                                    <span>Response Time</span>
+                                    <span class="stat-highlight">8ms</span>
+                                </div>
+                                <div class="stat-row" bis_skin_checked="1">
+                                    <span>Server Load</span>
+                                    <span class="stat-highlight">?%</span>
+                                </div>
+                                <div class="stat-row" bis_skin_checked="1">
+                                    <span>Memory Usage</span>
+                                    <span class="stat-highlight">?%</span>
+                                </div>
+                                <div class="stat-row" bis_skin_checked="1">
+                                    <span>Success Rate</span>
+                                    <span class="stat-highlight">?%</span>
+                                </div>
+                            </div>
+                            
+                            <div class="chart-container" bis_skin_checked="1">
+                                <h4>Server Load (24h)</h4>
+                                <div class="chart" id="server-load-chart" bis_skin_checked="1">
+                                    <div class="chart-bars" bis_skin_checked="1">
+                                        <div class="chart-bar" style="height: 0%;" data-value="0%" bis_skin_checked="1"></div>
+                                        <div class="chart-bar" style="height: 0%;" data-value="0%" bis_skin_checked="1"></div>
+                                        <div class="chart-bar" style="height: 0%;" data-value="0%" bis_skin_checked="1"></div>
+                                        <div class="chart-bar" style="height: 0%;" data-value="0%" bis_skin_checked="1"></div>
+                                        <div class="chart-bar" style="height: 0%;" data-value="0%" bis_skin_checked="1"></div>
+                                        <div class="chart-bar" style="height: 0%;" data-value="0%" bis_skin_checked="1"></div>
+                                        <div class="chart-bar" style="height: 0%;" data-value="0%" bis_skin_checked="1"></div>
+                                        <div class="chart-bar" style="height: 0%;" data-value="0%" bis_skin_checked="1"></div>
+                                    </div>
+                                    <div class="chart-labels" bis_skin_checked="1">
+                                        <span>00:00</span>
+                                        <span>03:00</span>
+                                        <span>06:00</span>
+                                        <span>09:00</span>
+                                        <span>12:00</span>
+                                        <span>15:00</span>
+                                        <span>18:00</span>
+                                        <span>21:00</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card" bis_skin_checked="1">
+                            <div class="stat-card-header" bis_skin_checked="1">
+                                <div class="stat-icon" bis_skin_checked="1">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2" stroke="currentColor" stroke-width="2"></rect>
+                                        <line x1="8" y1="21" x2="16" y2="21" stroke="currentColor" stroke-width="2"></line>
+                                        <line x1="12" y1="17" x2="12" y2="21" stroke="currentColor" stroke-width="2"></line>
+                                    </svg>
+                                </div>
+                                <h3>Product Usage</h3>
+                            </div>
+                            <div class="stat-details" bis_skin_checked="1">
+                                <div class="stat-row" bis_skin_checked="1">
+                                    <span>Nonagon Active</span>
+                                    <span class="stat-highlight">?</span>
+                                </div>
+                                <div class="stat-row" bis_skin_checked="1">
+                                    <span>Fatal Premium</span>
+                                    <span class="stat-highlight">?</span>
+                                </div>
+                                <div class="stat-row" bis_skin_checked="1">
+                                    <span>Total Downloads</span>
+                                    <span class="stat-highlight">?</span>
+                                </div>
+                                <div class="stat-row" bis_skin_checked="1">
+                                    <span>Sessions Today</span>
+                                    <span class="stat-highlight">?</span>
+                                </div>
+                            </div>
+
+                            <div class="chart-container" bis_skin_checked="1">
+                                <h4>Product Distribution</h4>
+                                <div class="pie-chart" bis_skin_checked="1">
+                                    <div class="pie-segment nonagon" style="--percentage: 65%;" data-label="Nonagon ?%" bis_skin_checked="1"></div>
+                                    <div class="pie-segment fatal" style="--percentage: 23%;" data-label="Fatal ?%" bis_skin_checked="1"></div>
+                                    <div class="pie-segment others" style="--percentage: 12%;" data-label="Others ?%" bis_skin_checked="1"></div>
+                                </div>
+                                <div class="pie-legend" bis_skin_checked="1">
+                                    <div class="legend-item" bis_skin_checked="1">
+                                        <div class="legend-color nonagon-color" bis_skin_checked="1"></div>
+                                        <span>Nonagon (?%)</span>
+                                    </div>
+                                    <div class="legend-item" bis_skin_checked="1">
+                                        <div class="legend-color fatal-color" bis_skin_checked="1"></div>
+                                        <span>Fatal (?%)</span>
+                                    </div>
+                                    <div class="legend-item" bis_skin_checked="1">
+                                        <div class="legend-color others-color" bis_skin_checked="1"></div>
+                                        <span>Others (?%)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card" bis_skin_checked="1">
+                            <div class="stat-card-header" bis_skin_checked="1">
+                                <div class="stat-icon" bis_skin_checked="1">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <polygon points="13,2 3,14 12,14 11,22 21,10 12,10 13,2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polygon>
+                                    </svg>
+                                </div>
+                                <h3>Live Activity</h3>
+                            </div>
+                            <div class="stat-details" id="live-activity" bis_skin_checked="1"><div class="activity-item" bis_skin_checked="1">
+                    <span class="activity-time">Just now</span>
+                    <span class="activity-text">User connected</span>
+                </div><div class="activity-item" bis_skin_checked="1">
+                    <span class="activity-time">30 min ago</span>
+                    <span class="activity-text">User connected</span>
+                </div><div class="activity-item" bis_skin_checked="1">
+                    <span class="activity-time">30 min ago</span>
+                    <span class="activity-text">All info: @WhoiseBio </span>
+                </div><div class="activity-item" bis_skin_checked="1">
+                    <span class="activity-time">30 min ago</span>
+                    <span class="activity-text">User connected</span>
+                </div><div class="activity-item" bis_skin_checked="1">
+                    <span class="activity-time">30 min ago</span>
+                    <span class="activity-text">User connected</span>
+                </div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="page-content" id="store-page" bis_skin_checked="1">
+                    <div class="content-header" bis_skin_checked="1">
+                        <h1>Store</h1>
+                        <div class="stats-bar" bis_skin_checked="1">
+                            <div class="stat-item" bis_skin_checked="1">
+                                <div class="stat-value" bis_skin_checked="1">4</div>
+                                <div class="stat-label" bis_skin_checked="1">Products</div>
+                            </div>
+                            <div class="stat-item" bis_skin_checked="1">
+                                <div class="stat-value" bis_skin_checked="1">1</div>
+                                <div class="stat-label" bis_skin_checked="1">On Sale</div>
+                            </div>
+                            <div class="stat-item" bis_skin_checked="1">
+                                <div class="stat-value" bis_skin_checked="1">$0</div>
+                                <div class="stat-label" bis_skin_checked="1">Balance</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="store-grid" bis_skin_checked="1">
+                        <div class="store-card featured" bis_skin_checked="1">
+                            <div class="store-badge" bis_skin_checked="1">BEST</div>
+                            <div class="store-header" bis_skin_checked="1">
+                                <div class="game-icon fatal-icon" bis_skin_checked="1">FTK</div>
+                                <div class="store-info" bis_skin_checked="1">
+                                    <h3>GayPorno</h3>
+                                    <div class="store-price" bis_skin_checked="1">
+                                        <span class="price-old">Free</span>
+                                        <span class="price-new">Free</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="store-features" bis_skin_checked="1">
+                                <div class="feature-item" bis_skin_checked="1">
+                                    <span class="feature-check">✓</span>
+                                    CS:2 Support
+                                </div>
+                                <div class="feature-item" bis_skin_checked="1">
+                                    <span class="feature-check">✓</span>
+                                    Rage
+                                </div>
+                                <div class="feature-item" bis_skin_checked="1">
+                                    <span class="feature-check">✓</span>
+                                    Undetected
+                                </div>
+                                <div class="feature-item" bis_skin_checked="1">
+                                    <span class="feature-check">✓</span>
+                                    24/7 Support
+                                </div>
+                            </div>
+                            <div class="store-actions" bis_skin_checked="1">
+                                <button class="btn btn-primary" onclick="window.open(&#39;https://rt.pornhub.org/gayporn&#39;, &#39;_blank&#39;)">Purchase • $17.99</button>
+                            </div>
+                        </div>
+
+                        <div class="store-card" bis_skin_checked="1">
+                            <div class="store-header" bis_skin_checked="1">
+                                <div class="game-icon phantom-icon" bis_skin_checked="1">NGB</div>
+                                <div class="store-info" bis_skin_checked="1">
+                                    <h3>Иди Нахуй</h3>
+                                    <div class="store-price" bis_skin_checked="1">
+                                        <span class="price-new">Free Access</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="store-features" bis_skin_checked="1">
+                                <div class="feature-item" bis_skin_checked="1">
+                                    <span class="feature-check">✓</span>
+                                    CS:2
+                                </div>
+                                <div class="feature-item" bis_skin_checked="1">
+                                    <span class="feature-check">✓</span>
+                                    Rage
+                                </div>
+                                <div class="feature-item" bis_skin_checked="1">
+                                    <span class="feature-check">✓</span>
+                                    Detected
+                                </div>
+                            </div>
+                            <div class="store-actions" bis_skin_checked="1">
+                                <button class="btn btn-secondary store-btn" disabled="">Coming Soon</button>
+                            </div>
+                        </div>
+
+                        <div class="store-card" bis_skin_checked="1">
+                            <div class="store-header" bis_skin_checked="1">
+                                <div class="game-icon legacy-icon" bis_skin_checked="1">PК</div>
+                                <div class="store-info" bis_skin_checked="1">
+                                    <h3>Ты че не понял , иди нахуй</h3>
+                                    <div class="store-price" bis_skin_checked="1">
+                                        <span class="price-new">$3</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="store-features" bis_skin_checked="1">
+                                <div class="feature-item" bis_skin_checked="1">
+                                    <span class="feature-check">✓</span>
+                                    CS:2
+                                </div>
+                                <div class="feature-item" bis_skin_checked="1">
+                                    <span class="feature-check">✓</span>
+                                    Rage
+                                </div>
+                                <div class="feature-item" bis_skin_checked="1">
+                                    <span class="feature-check">✓</span>
+                                    Undetected
+                                </div>
+                            </div>
+                            <div class="store-actions" bis_skin_checked="1">
+                                <button class="btn btn-secondary store-btn" disabled="">Coming Soon</button>
+                            </div>
+                        </div>
+
+                        <div class="store-card premium" bis_skin_checked="1">
+                            <div class="store-badge premium-badge" bis_skin_checked="1">BEST</div>
+                            <div class="store-header" bis_skin_checked="1">
+                                <div class="game-icon ultimate-icon" bis_skin_checked="1">CK</div>
+                                <div class="store-info" bis_skin_checked="1">
+                                    <h3>Гандон сьебись нахуй</h3>
+                                    <div class="store-price" bis_skin_checked="1">
+                                        <span class="price-old">$10</span>
+                                        <span class="price-new">$8</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="store-features" bis_skin_checked="1">
+                                <div class="feature-item" bis_skin_checked="1">
+                                    <span class="feature-check">✓</span>
+                                    CS:2
+                                </div>
+                                <div class="feature-item" bis_skin_checked="1">
+                                    <span class="feature-check">✓</span>
+                                    Rage
+                                </div>
+                                <div class="feature-item" bis_skin_checked="1">
+                                    <span class="feature-check">✓</span>
+                                    Undetected
+                                </div>
+                                <div class="feature-item" bis_skin_checked="1">
+                                    <span class="feature-check">✓</span>
+                                    24/7 Support
+                                </div>
+                            </div>
+                            <div class="store-actions" bis_skin_checked="1">
+                                <button class="btn btn-secondary store-btn" disabled="">Coming Soon</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="page-content" id="settings-page" bis_skin_checked="1">
+                    <div class="content-header" bis_skin_checked="1">
+                        <h1>Settings</h1>
+                        <div class="stats-bar" bis_skin_checked="1">
+                            <div class="stat-item" bis_skin_checked="1">
+                                <div class="stat-value" bis_skin_checked="1">Auto</div>
+                                <div class="stat-label" bis_skin_checked="1">Updates</div>
+                            </div>
+                            <div class="stat-item" bis_skin_checked="1">
+                                <div class="stat-value" bis_skin_checked="1">ON</div>
+                                <div class="stat-label" bis_skin_checked="1">Notifications</div>
+                            </div>
+                            <div class="stat-item" bis_skin_checked="1">
+                                <div class="stat-value" bis_skin_checked="1">High</div>
+                                <div class="stat-label" bis_skin_checked="1">Security</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings-grid" bis_skin_checked="1">
+                        <div class="settings-card" bis_skin_checked="1">
+                            <div class="settings-header" bis_skin_checked="1">
+                                <div class="settings-icon" bis_skin_checked="1">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"></circle>
+                                        <path d="M12 1V3" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                                        <path d="M12 21V23" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                                        <path d="M4.22 4.22L5.64 5.64" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                                        <path d="M18.36 18.36L19.78 19.78" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                                        <path d="M1 12H3" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                                        <path d="M21 12H23" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                                        <path d="M4.22 19.78L5.64 18.36" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                                        <path d="M18.36 5.64L19.78 4.22" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+                                    </svg>
+                                </div>
+                                <h3>Appearance</h3>
+                            </div>
+                            <div class="settings-options" bis_skin_checked="1">
+                                <div class="setting-item" bis_skin_checked="1">
+                                    <span class="setting-label">Theme</span>
+                                    <select class="setting-select" id="theme-select">
+                                        <option value="dark">Dark</option>
+                                        <option value="light">Light</option>
+                                        <option value="auto">Auto</option>
+                                    </select>
+                                </div>
+                                <div class="setting-item" bis_skin_checked="1">
+                                    <span class="setting-label">Language</span>
+                                    <select class="setting-select" id="language-select">
+                                        <option value="en">English</option>
+                                        <option value="ru">Русский</option>
+                                        <option value="de">Deutsch</option>
+                                    </select>
+                                </div>
+                                <div class="setting-item" bis_skin_checked="1">
+                                    <span class="setting-label">Animations</span>
+                                    <div class="toggle-switch active" id="animations-toggle" bis_skin_checked="1">
+                                        <div class="toggle-slider" bis_skin_checked="1"></div>
+                                    </div>
+                                </div>
+                                <div class="setting-item" bis_skin_checked="1">
+                                    <span class="setting-label">Reduced Motion</span>
+                                    <div class="toggle-switch" id="reduced-motion-toggle" bis_skin_checked="1">
+                                        <div class="toggle-slider" bis_skin_checked="1"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings-card" bis_skin_checked="1">
+                            <div class="settings-header" bis_skin_checked="1">
+                                <div class="settings-icon" bis_skin_checked="1">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M18 8A6 6 0 0 0 6 8C6 7 5 6 4 6C3 6 2 7 2 8V16C2 17 3 18 4 18C5 18 6 17 6 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <path d="M14 8V16C14 17 15 18 16 18C17 18 18 17 18 16C18 15 19 14 20 14C21 14 22 15 22 16V8C22 7 21 6 20 6C19 6 18 7 18 8Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                </div>
+                                <h3>Notifications</h3>
+                            </div>
+                            <div class="settings-options" bis_skin_checked="1">
+                                <div class="setting-item" bis_skin_checked="1">
+                                    <span class="setting-label">Desktop Notifications</span>
+                                    <div class="toggle-switch active" id="notifications-toggle" bis_skin_checked="1">
+                                        <div class="toggle-slider" bis_skin_checked="1"></div>
+                                    </div>
+                                </div>
+                                <div class="setting-item" bis_skin_checked="1">
+                                    <span class="setting-label">Sound Alerts</span>
+                                    <div class="toggle-switch active" id="sounds-toggle" bis_skin_checked="1">
+                                        <div class="toggle-slider" bis_skin_checked="1"></div>
+                                    </div>
+                                </div>
+                                <div class="setting-item" bis_skin_checked="1">
+                                    <span class="setting-label">Vibration</span>
+                                    <div class="toggle-switch active" id="vibration-toggle" bis_skin_checked="1">
+                                        <div class="toggle-slider" bis_skin_checked="1"></div>
+                                    </div>
+                                </div>
+                                <div class="setting-item" bis_skin_checked="1">
+                                    <span class="setting-label">Update Alerts</span>
+                                    <div class="toggle-switch active" id="update-alerts-toggle" bis_skin_checked="1">
+                                        <div class="toggle-slider" bis_skin_checked="1"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings-card" bis_skin_checked="1">
+                            <div class="settings-header" bis_skin_checked="1">
+                                <div class="settings-icon" bis_skin_checked="1">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <polygon points="13,2 3,14 12,14 11,22 21,10 12,10 13,2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polygon>
+                                    </svg>
+                                </div>
+                                <h3>Performance</h3>
+                            </div>
+                            <div class="settings-options" bis_skin_checked="1">
+                                <div class="setting-item" bis_skin_checked="1">
+                                    <span class="setting-label">Auto-refresh Stats</span>
+                                    <div class="toggle-switch active" id="auto-refresh-toggle" bis_skin_checked="1">
+                                        <div class="toggle-slider" bis_skin_checked="1"></div>
+                                    </div>
+                                </div>
+                                <div class="setting-item" bis_skin_checked="1">
+                                    <span class="setting-label">Live Activity Feed</span>
+                                    <div class="toggle-switch active" id="live-activity-toggle" bis_skin_checked="1">
+                                        <div class="toggle-slider" bis_skin_checked="1"></div>
+                                    </div>
+                                </div>
+                                <div class="setting-item" bis_skin_checked="1">
+                                    <span class="setting-label">Background Sync</span>
+                                    <div class="toggle-switch active" id="background-sync-toggle" bis_skin_checked="1">
+                                        <div class="toggle-slider" bis_skin_checked="1"></div>
+                                    </div>
+                                </div>
+                                <div class="setting-item" bis_skin_checked="1">
+                                    <span class="setting-label">Data Compression</span>
+                                    <div class="toggle-switch" id="compression-toggle" bis_skin_checked="1">
+                                        <div class="toggle-slider" bis_skin_checked="1"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings-card" bis_skin_checked="1">
+                            <div class="settings-header" bis_skin_checked="1">
+                                <div class="settings-icon" bis_skin_checked="1">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" stroke="currentColor" stroke-width="2"></rect>
+                                        <circle cx="12" cy="16" r="1" stroke="currentColor" stroke-width="2"></circle>
+                                        <path d="M7 11V7A5 5 0 0 1 17 7V11" stroke="currentColor" stroke-width="2"></path>
+                                    </svg>
+                                </div>
+                                <h3>Privacy &amp; Security</h3>
+                            </div>
+                            <div class="settings-options" bis_skin_checked="1">
+                                <div class="setting-item" bis_skin_checked="1">
+                                    <span class="setting-label">Remember Session</span>
+                                    <div class="toggle-switch active" id="remember-session-toggle" bis_skin_checked="1">
+                                        <div class="toggle-slider" bis_skin_checked="1"></div>
+                                    </div>
+                                </div>
+                                <div class="setting-item" bis_skin_checked="1">
+                                    <span class="setting-label">Analytics</span>
+                                    <div class="toggle-switch" id="analytics-toggle" bis_skin_checked="1">
+                                        <div class="toggle-slider" bis_skin_checked="1"></div>
+                                    </div>
+                                </div>
+                                <div class="setting-item" bis_skin_checked="1">
+                                    <span class="setting-label">Crash Reports</span>
+                                    <div class="toggle-switch active" id="crash-reports-toggle" bis_skin_checked="1">
+                                        <div class="toggle-slider" bis_skin_checked="1"></div>
+                                    </div>
+                                </div>
+                                <div class="setting-item" bis_skin_checked="1">
+                                    <span class="setting-label">Clear Cache</span>
+                                    <button class="btn btn-secondary" id="clear-cache-btn">Clear Now</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function downloadClient() {
+            const link = document.createElement('a');
+            link.href = 'https://youtu.be/GBIIQ0kP15E?si=oWyJZZje3157XUjz';
+            link.download = 'scam.rar';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            vibrateDevice([200, 100, 300, 150, 400]);
+        }
+
+        function launchNonagon() {
+            window.open('https://youtu.be/GBIIQ0kP15E?si=oWyJZZje3157XUjz', '_blank');
+            
+            vibrateDevice([300, 100, 400, 150, 500, 200, 600]);
+        }
+
+        function vibrateDevice(pattern) {
+            if ('vibrate' in navigator && siteSettings.vibration) {
+                navigator.vibrate(pattern);
+            }
+        }
+
+        function epicEntranceVibration() {
+            const earthquakePattern = [
+                200, 100, 300, 150, 400, 200, 500, 100, 
+                600, 150, 700, 200, 800, 100, 900, 150,
+                1000, 200, 800, 100, 600, 150, 400, 200,
+                200, 100, 100, 50, 50, 25
+            ];
+            vibrateDevice(earthquakePattern);
+        }
+
+        function quickVibrate() {
+            vibrateDevice([50, 30, 80]);
+        }
+
+        function buttonVibrate() {
+            vibrateDevice([100, 50, 150]);
+        }
+
+        function menuVibrate() {
+            vibrateDevice([80, 40, 120, 60]);
+        }
+
+        function cardVibrate() {
+            vibrateDevice([60, 30, 90]);
+        }
+
+        function achievementVibrate() {
+            vibrateDevice([200, 100, 200, 100, 400, 200, 600]);
+        }
+
+        function toggleMobileMenu() {
+            const sidebar = document.getElementById('mobile-sidebar');
+            
+            if (sidebar.classList.contains('open')) {
+                sidebar.classList.remove('open');
+            } else {
+                sidebar.classList.add('open');
+            }
+            
+            menuVibrate();
+        }
+
+        function closeMobileMenu() {
+            const sidebar = document.getElementById('mobile-sidebar');
+            
+            sidebar.classList.remove('open');
+            
+            quickVibrate();
+        }
+
+        // Enhanced loading with progress and EPIC VIBRATIONS
+        let progress = 0;
+        const loadingInterval = setInterval(() => {
+            progress += Math.random() * 12;
+            
+            // Random vibrations during loading
+            if (Math.random() > 0.7) {
+                vibrateDevice([30, 20, 50]);
+            }
+            
+            if (progress >= 100) {
+                progress = 100;
+                clearInterval(loadingInterval);
+                
+                // EPIC ENTRANCE VIBRATION!
+                setTimeout(() => {
+                    epicEntranceVibration();
+                }, 300);
+                
+                setTimeout(() => {
+                    document.getElementById('loader-page').style.opacity = '0';
+                    document.getElementById('loader-page').style.transition = 'opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+                    setTimeout(() => {
+                        document.getElementById('loader-page').style.display = 'none';
+                        document.getElementById('main-page').style.display = 'block';
+                        document.getElementById('main-page').style.opacity = '0';
+                        setTimeout(() => {
+                            document.getElementById('main-page').style.transition = 'opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+                            document.getElementById('main-page').style.opacity = '1';
+                            
+                            // Final welcome vibration
+                            setTimeout(() => {
+                                vibrateDevice([500, 200, 300, 100, 200]);
+                            }, 500);
+                        }, 100);
+                    }, 800);
+                }, 600);
+            }
+        }, 120);
+
+        let siteSettings = {
+            theme: 'dark',
+            language: 'en',
+            notifications: true,
+            sounds: true,
+            animations: true,
+            vibration: true,
+            reducedMotion: false,
+            updateAlerts: true,
+            autoRefresh: true,
+            liveActivity: true,
+            backgroundSync: true,
+            compression: false,
+            rememberSession: true,
+            analytics: false,
+            crashReports: true
+        };
+
+        let statsInterval = null;
+        let activityInterval = null;
+
+        const translations = {
+            en: {
+                subscriptions: 'Subscriptions',
+                statistics: 'Statistics',
+                store: 'Store',
+                settings: 'Settings',
+                premiumUser: 'Premium User',
+                country: 'Country',
+                downloadClient: 'Download Loader'
+            },
+            ru: {
+                subscriptions: 'Подписки',
+                statistics: 'Статистика',
+                store: 'Магазин',
+                settings: 'Настройки',
+                premiumUser: 'Премиум пользователь',
+                country: 'Страна',
+                downloadClient: 'Скачать лоадер'
+            },
+            de: {
+                subscriptions: 'Abonnements',
+                statistics: 'Statistiken',
+                store: 'Shop',
+                settings: 'Einstellungen',
+                premiumUser: 'Premium-Benutzer',
+                country: 'Land',
+                downloadClient: 'Loader herunterladen'
+            }
+        };
+
+        function updateLanguage(lang) {
+            const t = translations[lang];
+            if (!t) return;
+
+            document.querySelector('[data-page="subscriptions"]').innerHTML = 
+                `<span class="menu-icon">◉</span> ${t.subscriptions}<span class="notification-badge">3</span>`;
+            document.querySelector('[data-page="statistics"]').innerHTML = 
+                `<span class="menu-icon">▣</span> ${t.statistics}`;
+            document.querySelector('[data-page="store"]').innerHTML = 
+                `<span class="menu-icon">▨</span> ${t.store}`;
+            document.querySelector('[data-page="settings"]').innerHTML = 
+                `<span class="menu-icon">⚙</span> ${t.settings}`;
+
+            document.querySelector('.profile-info').innerHTML = `
+                <span>🆔 <span class="status-indicator"></span>UID: Gay</span>
+                <span>🏳️ ${t.country}: Gitler</span>
+                <span>💪 ${t.premiumUser}</span>
+            `;
+
+            document.querySelector('.download-client-btn').innerHTML = `
+                <span class="download-icon">⬇</span>
+                ${t.downloadClient}
+            `;
+
+            const currentPage = document.querySelector('.page-content.active');
+            if (currentPage) {
+                const pageId = currentPage.id.replace('-page', '');
+                if (t[pageId]) {
+                    currentPage.querySelector('h1').textContent = t[pageId];
+                }
+            }
+        }
+
+        function applyTheme(theme) {
+            document.body.classList.remove('light-theme', 'dark-theme');
+            if (theme === 'light') {
+                document.body.classList.add('light-theme');
+            } else if (theme === 'dark') {
+                document.body.classList.add('dark-theme');
+            } else if (theme === 'auto') {
+                const isLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+                document.body.classList.add(isLight ? 'light-theme' : 'dark-theme');
+            }
+        }
+
+        function applyAnimations(enabled, reducedMotion = false) {
+            if (!enabled || reducedMotion) {
+                document.body.classList.add('no-animations');
+            } else {
+                document.body.classList.remove('no-animations');
+            }
+        }
+
+        function toggleLiveUpdates(enabled) {
+            if (enabled) {
+                if (!statsInterval) {
+                    statsInterval = setInterval(updateLiveStats, 3000);
+                }
+                if (!activityInterval && siteSettings.liveActivity) {
+                    activityInterval = setInterval(updateLiveActivity, 5000);
+                }
+            } else {
+                if (statsInterval) {
+                    clearInterval(statsInterval);
+                    statsInterval = null;
+                }
+                if (activityInterval) {
+                    clearInterval(activityInterval);
+                    activityInterval = null;
+                }
+            }
+        }
+
+        function clearCache() {
+            siteSettings = {
+                theme: 'dark',
+                language: 'en',
+                notifications: true,
+                sounds: true,
+                animations: true,
+                vibration: true,
+                reducedMotion: false,
+                updateAlerts: true,
+                autoRefresh: true,
+                liveActivity: true,
+                backgroundSync: true,
+                compression: false,
+                rememberSession: true,
+                analytics: false,
+                crashReports: true
+            };
+            
+            applyTheme('dark');
+            updateLanguage('en');
+            applyAnimations(true, false);
+            
+            if (siteSettings.notifications) {
+                console.log('Cache cleared successfully');
+            }
+            
+            achievementVibrate();
+        }
+
+        function updateLiveStats() {
+            const baseOnline = 0;
+            const variation = Math.floor(Math.random() * 0) - 0;
+            const newOnline = Math.max(1200, baseOnline + variation);
+            document.getElementById('online-users').textContent = newOnline.toLocaleString();
+
+            const totalUsersEl = document.getElementById('total-users');
+            let currentTotal = parseInt(totalUsersEl.textContent.replace(',', ''));
+            if (Math.random() > 0.1) {
+                currentTotal += 0;
+                totalUsersEl.textContent = currentTotal.toLocaleString();
+            }
+
+            const active24h = document.getElementById('active-24h');
+            const baseActive = 0;
+            const activeVariation = Math.floor(Math.random() * 0) - 0;
+            active24h.textContent = (baseActive + activeVariation).toLocaleString();
+
+            const newRegs = document.getElementById('new-regs');
+            const baseRegs = 0;
+            const regsVariation = Math.floor(Math.random() * 0) - 0;
+            newRegs.textContent = Math.max(0, baseRegs + regsVariation);
+        }
+
+        function updateLiveActivity() {
+            const activities = [
+                'All info: @WhoiseBio ',
+                'User connected',
+                'User connected',
+                'User connected',
+                'User connected',
+                'User connected',
+                'User connected',
+                'User connected',
+                'Statistics updated',
+                'User connected',
+                'User connected',
+                'User connected'
+            ];
+
+            const liveActivity = document.getElementById('live-activity');
+            if (liveActivity && Math.random() > 0.0) {
+                const randomActivity = activities[Math.floor(Math.random() * activities.length)];
+                
+                const newActivity = document.createElement('div');
+                newActivity.className = 'activity-item';
+                newActivity.innerHTML = `
+                    <span class="activity-time">Just now</span>
+                    <span class="activity-text">${randomActivity}</span>
+                `;
+
+                liveActivity.insertBefore(newActivity, liveActivity.firstChild);
+                while (liveActivity.children.length > 5) {
+                    liveActivity.removeChild(liveActivity.lastChild);
+                }
+
+                Array.from(liveActivity.children).forEach((item, index) => {
+                    const timeEl = item.querySelector('.activity-time');
+                    if (index === 0) {
+                        timeEl.textContent = 'Just now';
+                    } else if (index === 1) {
+                        timeEl.textContent = Math.floor(Math.random() * 1 + 30) + ' min ago';
+                    } else {
+                        timeEl.textContent = Math.floor(Math.random() * 1 + 30) + ' min ago';
+                    }
+                });
+            }
+        }
+
+        function switchPage(pageName) {
+            const pages = document.querySelectorAll('.page-content');
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            const targetPage = document.getElementById(pageName + '-page');
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+            
+            const menuItems = document.querySelectorAll('.menu-item');
+            menuItems.forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            const activeMenuItem = document.querySelector(`[data-page="${pageName}"]`);
+            if (activeMenuItem) {
+                activeMenuItem.classList.add('active');
+            }
+            
+            buttonVibrate();
+        }
+
+        // Add interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Menu item interactions
+            const menuItems = document.querySelectorAll('.menu-item');
+            menuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const pageName = this.getAttribute('data-page');
+                    if (pageName) {
+                        switchPage(pageName);
+                    }
+                    
+                    // Close mobile menu on item click
+                    if (window.innerWidth <= 768) {
+                        closeMobileMenu();
+                    }
+                });
+                
+                // Add hover vibration for desktop
+                if (window.innerWidth > 768) {
+                    item.addEventListener('mouseenter', function() {
+                        quickVibrate();
+                    });
+                }
+            });
+
+            // Card hover effects with enhanced smoothness and vibrations
+            const cards = document.querySelectorAll('.subscription-card');
+            cards.forEach(card => {
+                if (window.innerWidth > 768) {
+                    card.addEventListener('mouseenter', function() {
+                        this.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                        this.style.transform = 'translateY(-12px) scale(1.03)';
+                        cardVibrate(); // Vibrate on hover
+                    });
+                    
+                    card.addEventListener('mouseleave', function() {
+                        this.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+                        this.style.transform = 'translateY(0) scale(1)';
+                    });
+                } else {
+                    // Mobile tap vibration
+                    card.addEventListener('touchstart', function() {
+                        cardVibrate();
+                    });
+                }
+            });
+
+            // Button interactions with enhanced ripple and vibrations
+            const buttons = document.querySelectorAll('.btn, .download-btn, .download-client-btn, .store-btn');
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    // Check if it's a purchase button for special vibration
+                    if (this.textContent.includes('Purchase')) {
+                        achievementVibrate();
+                    } else if (this.textContent.includes('Download') && !this.classList.contains('download-btn') && !this.classList.contains('download-client-btn')) {
+                        // Download cheat vibration (handled by launchNonagon function)
+                        return; // Skip here as it's handled in the function
+                    } else if (this.classList.contains('download-btn') || this.classList.contains('download-client-btn')) {
+                        // Download client vibration (handled by downloadClient function)
+                        return; // Skip here as it's handled in the function
+                    } else {
+                        buttonVibrate();
+                    }
+                    
+                    // Create enhanced ripple effect
+                    const ripple = document.createElement('span');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.style.width = ripple.style.height = size + 'px';
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+                    ripple.style.position = 'absolute';
+                    ripple.style.background = 'rgba(255, 255, 255, 0.4)';
+                    ripple.style.borderRadius = '50%';
+                    ripple.style.transform = 'scale(0)';
+                    ripple.style.animation = 'ripple 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+                    ripple.style.pointerEvents = 'none';
+                    
+                    this.style.position = 'relative';
+                    this.style.overflow = 'hidden';
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 800);
+                });
+            });
+
+            // Avatar click vibration
+            const avatar = document.querySelector('.avatar');
+            if (avatar) {
+                avatar.addEventListener('click', function() {
+                    // Fun avatar vibration pattern
+                    vibrateDevice([100, 50, 100, 50, 200, 100, 300]);
+                });
+            }
+
+            // Support link vibration
+            const supportLink = document.querySelector('.support a');
+            if (supportLink) {
+                supportLink.addEventListener('click', function() {
+                    vibrateDevice([150, 75, 150, 75, 300]);
+                });
+            }
+
+            // Close mobile menu on window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    closeMobileMenu();
+                }
+            });
+
+            // Add touch event handling for better mobile interaction
+            let touchStartY = 0;
+            let touchEndY = 0;
+            
+            const sidebar = document.getElementById('mobile-sidebar');
+            if (sidebar) {
+                sidebar.addEventListener('touchstart', function(e) {
+                    touchStartY = e.touches[0].clientY;
+                }, { passive: true });
+                
+                sidebar.addEventListener('touchmove', function(e) {
+                    // Allow natural scrolling within sidebar
+                }, { passive: true });
+                
+                sidebar.addEventListener('touchend', function(e) {
+                    touchEndY = e.changedTouches[0].clientY;
+                    // Could add swipe gestures here if needed
+                }, { passive: true });
+            }
+
+            // Toggle switches functionality
+            const toggleSwitches = document.querySelectorAll('.toggle-switch');
+            toggleSwitches.forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    quickVibrate();
+
+                    // Apply settings based on toggle ID (only if ID exists)
+                    const settingId = this.id;
+                    if (!settingId) return;
+                    
+                    const isActive = this.classList.contains('active');
+
+                    switch(settingId) {
+                        case 'notifications-toggle':
+                            siteSettings.notifications = isActive;
+                            break;
+                        case 'sounds-toggle':
+                            siteSettings.sounds = isActive;
+                            break;
+                        case 'animations-toggle':
+                            siteSettings.animations = isActive;
+                            applyAnimations(isActive, siteSettings.reducedMotion);
+                            break;
+                        case 'vibration-toggle':
+                            siteSettings.vibration = isActive;
+                            break;
+                        case 'reduced-motion-toggle':
+                            siteSettings.reducedMotion = isActive;
+                            applyAnimations(siteSettings.animations, isActive);
+                            break;
+                        case 'update-alerts-toggle':
+                            siteSettings.updateAlerts = isActive;
+                            break;
+                        case 'auto-refresh-toggle':
+                            siteSettings.autoRefresh = isActive;
+                            toggleLiveUpdates(isActive);
+                            break;
+                        case 'live-activity-toggle':
+                            siteSettings.liveActivity = isActive;
+                            if (isActive && siteSettings.autoRefresh) {
+                                activityInterval = setInterval(updateLiveActivity, 5000);
+                            } else if (activityInterval) {
+                                clearInterval(activityInterval);
+                                activityInterval = null;
+                            }
+                            break;
+                        case 'background-sync-toggle':
+                            siteSettings.backgroundSync = isActive;
+                            break;
+                        case 'compression-toggle':
+                            siteSettings.compression = isActive;
+                            break;
+                        case 'remember-session-toggle':
+                            siteSettings.rememberSession = isActive;
+                            break;
+                        case 'analytics-toggle':
+                            siteSettings.analytics = isActive;
+                            break;
+                        case 'crash-reports-toggle':
+                            siteSettings.crashReports = isActive;
+                            break;
+                    }
+                });
+            });
+
+            // Clear cache button
+            const clearCacheBtn = document.getElementById('clear-cache-btn');
+            if (clearCacheBtn) {
+                clearCacheBtn.addEventListener('click', function() {
+                    clearCache();
+                    this.textContent = 'Cleared!';
+                    this.disabled = true;
+                    
+                    setTimeout(() => {
+                        this.textContent = 'Clear Now';
+                        this.disabled = false;
+                    }, 2000);
+                });
+            }
+
+            // Settings dropdowns
+            const themeSelect = document.getElementById('theme-select');
+            const languageSelect = document.getElementById('language-select');
+
+            if (themeSelect) {
+                themeSelect.addEventListener('change', function() {
+                    siteSettings.theme = this.value;
+                    applyTheme(this.value);
+                    quickVibrate();
+                });
+            }
+
+            if (languageSelect) {
+                languageSelect.addEventListener('change', function() {
+                    siteSettings.language = this.value;
+                    updateLanguage(this.value);
+                    quickVibrate();
+                });
+            }
+
+            // Store purchase buttons
+            const storeBtns = document.querySelectorAll('.store-btn');
+            storeBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (!this.disabled && this.textContent.includes('Purchase')) {
+                        achievementVibrate();
+                        // Here you would typically handle the purchase logic
+                        this.textContent = 'Processing...';
+                        this.disabled = true;
+                        
+                        setTimeout(() => {
+                            this.textContent = 'Purchase Now';
+                            this.disabled = false;
+                        }, 2000);
+                    }
+                });
+            });
+
+            // Secret easter egg - shake to trigger mega vibration
+            let shakeCount = 0;
+            window.addEventListener('devicemotion', function(e) {
+                const acceleration = e.accelerationIncludingGravity;
+                const threshold = 15;
+                
+                if (Math.abs(acceleration.x) > threshold || 
+                    Math.abs(acceleration.y) > threshold || 
+                    Math.abs(acceleration.z) > threshold) {
+                    shakeCount++;
+                    
+                    if (shakeCount > 3) {
+                        // MEGA EARTHQUAKE VIBRATION!
+                        const megaPattern = [];
+                        for (let i = 0; i < 20; i++) {
+                            megaPattern.push(Math.random() * 300 + 200);
+                            megaPattern.push(Math.random() * 100 + 50);
+                        }
+                        vibrateDevice(megaPattern);
+                        shakeCount = 0;
+                    }
+                }
+            });
+            
+            // Reset shake count after delay
+            setInterval(() => {
+                shakeCount = 0;
+            }, 3000);
+
+            // Initialize settings
+            applyTheme(siteSettings.theme);
+            updateLanguage(siteSettings.language);
+            applyAnimations(siteSettings.animations, siteSettings.reducedMotion);
+
+            // Start live updates if enabled
+            if (siteSettings.autoRefresh) {
+                toggleLiveUpdates(true);
+            }
+
+            // Chart bar interactions
+            const chartBars = document.querySelectorAll('.chart-bar');
+            chartBars.forEach(bar => {
+                bar.addEventListener('mouseenter', function() {
+                    if (siteSettings.sounds) {
+                        // Could play a sound here
+                    }
+                    quickVibrate();
+                });
+            });
+
+            // Pie chart interaction
+            const pieChart = document.querySelector('.pie-chart');
+            if (pieChart) {
+                pieChart.addEventListener('click', function() {
+                    this.style.transform = 'scale(1.1)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 200);
+                    buttonVibrate();
+                });
+            }
+        });
+
+        // Add enhanced ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+            
+            /* Font smoothing and base styles */
+            * {
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+            
+            /* Desktop hover effects */
+            @media (min-width: 769px) {
+                .subscription-card:hover .card-info h3 {
+                    color: #ff6b6b;
+                    transform: translateX(3px);
+                }
+            }
+            
+            /* Additional smooth transitions for mobile */
+            .subscription-card .card-info h3 {
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            
+            .feature-item {
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            
+            .feature-item:hover {
+                transform: translateX(5px);
+                color: #ffffff;
+            }
+            
+            .stat-item {
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            
+            .stat-item:hover {
+                transform: translateY(-3px) scale(1.05);
+                background: rgba(255, 255, 255, 0.1);
+            }
+            
+            /* Mobile specific improvements */
+            @media (max-width: 768px) {
+                .subscription-card .card-info h3:hover {
+                    color: inherit;
+                    transform: none;
+                }
+                
+                .feature-item:hover {
+                    transform: none;
+                    color: inherit;
+                }
+                
+                .stat-item:hover {
+                    transform: none;
+                }
+                
+                /* Better touch targets */
+                .btn, .download-btn, .download-client-btn, .store-btn {
+                    min-height: 44px;
+                }
+
+                .setting-item .btn {
+                    min-height: 40px;
+                    padding: 10px 14px;
+                    font-size: 13px;
+                }
+                
+                .menu-item {
+                    min-height: 48px;
+                }
+                
+                .download-btn, .download-client-btn, .store-btn {
+                    padding: 12px 15px;
+                }
+                
+                /* Improved mobile spacing */
+                .profile-info span {
+                    font-size: 12px;
+                    padding: 6px 10px;
+                }
+                
+                .subscription-status {
+                    font-size: 13px;
+                }
+                
+                .feature-item {
+                    font-size: 12px;
+                    margin: 6px 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+
+ 
+<script>
+  document.addEventListener('contextmenu', e => e.preventDefault());
+  document.onkeydown = function(e) {
+    if (
+      e.ctrlKey && (e.key === 's' || e.key === 'S') || // Ctrl+S
+      e.key === 'F12' || // F12
+      (e.ctrlKey && e.shiftKey && e.key === 'I') // Ctrl+Shift+I
+    ) {
+      e.preventDefault();
+      return false;
+    }
+  };
+</body></html>
